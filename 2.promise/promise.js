@@ -20,6 +20,15 @@ function Promise (executor) {
 
   // 变成成功态
   function resolve (value) {
+    // 示例：嵌套Promise
+    // 说明value是Primise
+    if (value instanceof Promise) {
+      return value.then(resolve, reject)
+    }
+    // if (value !== null && (typeof value === 'object' || typeof value === 'function' )) {
+    //   if (value.then && typeof value.then === 'function') {}
+    //   return value.then(resolve, reject)
+    // }
     if (self.status === 'pending') {
       self.value = value
       self.status = 'fulfilled'
@@ -153,9 +162,29 @@ Promise.prototype.then = function (onfulfilled, onrejected) {
   return promise2
 }
 
+// catch 是then的简写 同示例：catch
+Promise.prototype.catch = function (errCallback) {
+  return this.then(null, errCallback)
+}
+
+// 上来就创建一个成功的Promise 简写
+Promise.resolve = function (value) {
+  return new Promise((resolve, reject) => {
+    resolve(value)
+  })
+}
+
+// 上来就创建一个失败的Promise 简写
+Promise.reject = function (reason) {
+  return new Promise((resolve, reason) => {
+    reason(reason)
+  })
+}
+
 // 测试自己写的promise是否符合规范
 // npm install promises-aplus-tests -g
 // promises-aplus-tests promise.js
+// 扩展: 比如面试问，请实现一个延迟对象，像Promise.deferred就是一个延迟对象
 Promise.deferred = function () {
   let dfd = {}
   dfd.promise = new Promise((resolve, reject) => {

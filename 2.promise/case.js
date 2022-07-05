@@ -49,3 +49,80 @@ let promise3 = promise2.then(_ => {
 promise3.then(data => {
   console.log(data)
 })
+
+// -------------------------------------------------------
+let Promise = require('./promise')
+let fs = require('fs')
+
+// anguar1.0 defer 对象 Q
+function read (url) {
+  // 延迟对象
+  let defer = Promise.deferred() // { promise, resolve, reject }
+  fs.readFile(url, 'utf8', function (err, data) {
+    if (err) return defer.reject(err)
+    defer.resolve(data)
+  })
+  return defer.promise
+}
+
+read('./name.txt').then(data => {
+  console.log(data)
+})
+
+// -------------------------------------------------------
+let Promise = require('./promise')
+
+// 示例：catch
+let p = new Promise((resolve, reject) => {
+  reject('123')
+})
+
+p.then(null, err => {
+  throw err
+}).catch(err => {
+  console.log(err)
+}).then(data => {
+  console.log(data, '---')
+})
+
+// -------------------------------------------------------
+let Promise = require('./promise')
+
+// 作业：实现一个finally
+
+let p = new Promise((resolve, reject) => {
+  reject('123')
+})
+
+p.then(null, err => {
+  console.log(err)
+}).then(data => {
+  throw new Error('错误')
+}).finally(() => { // 无论如何都执行
+  console.log('1000')
+}).catch(err => {
+  console.log('err', err)
+})
+
+// -------------------------------------------------------
+let Promise = require('./promise')
+
+// 示例：嵌套Promise
+let p = new Promise((resolve, reject) => {
+  resolve(new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(100)
+    }, 1000)
+  }))
+})
+
+p.then(r => {
+  console.log(r)
+})
+
+// -------------------------------------------------------
+let Promise = require('./promise')
+
+Promise.resolve(123).then(data => {
+  console.log(data)
+})
