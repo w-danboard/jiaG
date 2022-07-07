@@ -1,7 +1,8 @@
 // 装饰器可以修饰类 类的属性 类的原型上的方法
 // 修饰的时候 就是把这个类 属性... 传递给修饰的函数
 
-@flag
+// @flag
+@flag('哺乳类')
 class Animal {
   @readonly
   PI = 3.14
@@ -14,8 +15,13 @@ class Animal {
 }
 
 // 1）类的静态属性
-function flag () {
-  consructor.type = '哺乳类'
+// function flag () {
+//   consructor.type = '哺乳类'
+// }
+function flag (value) {
+  return function (consructor) {
+    consructor.type = value
+  }
 }
 console.log(Animal.type)
 
