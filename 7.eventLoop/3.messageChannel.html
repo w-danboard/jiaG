@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+      // 通道 （特别像webWorker 开启一个子进程 postMessage onmessage）
+      let channel = new MessageChannel()
+      let port1 = channel.port1
+      let port2 = channel.port2
+      port2.postMessage('你好') // 发消息的过程是异步
+      console.log(1)
+      // vue.nextTick 以前用这种方式实现的，现在废弃了
+      port1.onmessage = function (e) {
+        console.log(e.data)
+      }
+      console.log(2)
+    </script>
+</body>
+</html>
