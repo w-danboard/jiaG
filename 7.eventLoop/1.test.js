@@ -42,8 +42,8 @@ console.log('start') // 先执行同步代码
 // 浏览器的事件环和node事件环有什么区别(现在是一样的) (自从node11的版本出现后，就统一了)
 
 // 给方法 分类
-// 宏任务 （setImmediate ie支持） setTimeout 
-// 微任务 then MutationObserver MessageChannel
+// 宏任务 （setImmediate ie支持） setTimeout MessageChannel
+// 微任务 then MutationObserver
 
 // Vue.nextTick  下一个队列 (异步的)
 
