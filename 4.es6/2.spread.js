@@ -36,7 +36,7 @@ console.log(all)
 function deepClone (obj, hash = new WeakMap()) {
   // 判断obj是null还是undefined
   if (obj == null) return obj
-  // 不是对象就不用拷贝了
+  // 不是对象就不用拷贝
   if (obj instanceof Date) return new Date(obj)
   if (obj instanceof RegExp) return new RegExp(obj)
   if (typeof obj === 'object') return obj
